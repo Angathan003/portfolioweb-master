@@ -10,6 +10,9 @@ const renderer = new THREE.WebGLRenderer({ canvas: document.querySelector('#bg')
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 
+
+
+
 // Create a torus
 // const geometry = new THREE.TorusGeometry(10, 3, 8, 10);
 // const material = new THREE.MeshStandardMaterial({ color: 0xffff00, wireframe: true });
