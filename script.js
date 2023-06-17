@@ -13,6 +13,7 @@ renderer.setPixelRatio(window.devicePixelRatio);
 
 
 
+
 // Create a torus
 // const geometry = new THREE.TorusGeometry(10, 3, 8, 10);
 // const material = new THREE.MeshStandardMaterial({ color: 0xffff00, wireframe: true });
@@ -72,14 +73,30 @@ loader.load(
 
 
 // Create a moon
-const moonGeometry = new THREE.SphereGeometry(1, 10, 5);
-const moonMaterial = new THREE.MeshBasicMaterial({ color: 0xffff00, transparent: true, wireframe: true });
-const moon = new THREE.Mesh(moonGeometry, moonMaterial);
-scene.add(moon);
-moon.position.set(-10, 0, 30);
+const jefTexture = new THREE.TextureLoader().load('reactjs.png');
+const jef = new THREE.Mesh(
+  new THREE.SphereGeometry(0.4, 8, 8), // Use SphereGeometry instead of BoxGeometry
+  new THREE.MeshBasicMaterial({ map: jefTexture })
+);
+jef.position.set(-5, 0, 15);
+jef.scale.set(3.4, 3.4, 3.4);
+scene.add(jef);
+
+
 
 jeff.position.z = -5;
 jeff.position.x = 2;
+
+// Add the text container to the body
+// const textContainer = document.createElement('div');
+// textContainer.id = 'text-container';
+// document.body.appendChild(textContainer);
+
+// // Create the animated text element
+// const animatedText = document.createElement('h1');
+// animatedText.id = 'animated-text';
+// animatedText.textContent = 'Hello, World!';
+// textContainer.appendChild(animatedText);
 
 // Move the camera based on scroll
 function moveCamera() {
@@ -92,6 +109,10 @@ function moveCamera() {
   jeff.rotation.y += 0.01;
   jeff.rotation.z += 0.01;
 
+  jef.rotation.y += 0.1;
+  jef.rotation.z += 0.1;
+
+  
   if (model) {
     model.rotation.y += 0.1;
     model.rotation.z += 0.1;

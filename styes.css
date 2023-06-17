@@ -229,3 +229,25 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 
 
   }
+ 
+  #text-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+  
+  #animated-text {
+    font-size: 40px;
+    animation: slide-in 2s ease-in-out infinite;
+  }
+  
+  @keyframes slide-in {
+    0% {
+      transform: translateX(-100%);
+    }
+    100% {
+      transform: translateX(0%);
+    }
+  }
+  
