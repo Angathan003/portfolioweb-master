@@ -82,6 +82,23 @@ jef.position.set(-5, 0, 15);
 jef.scale.set(3.4, 3.4, 3.4);
 scene.add(jef);
 
+const cssTexture = new THREE.TextureLoader().load('css.png');
+const css = new THREE.Mesh(
+  new THREE.SphereGeometry(0.4, 8, 8), // Use SphereGeometry instead of BoxGeometry
+  new THREE.MeshBasicMaterial({ map: cssTexture })
+);
+css.position.set(-4, 1, 10);
+css.scale.set(3.4, 3.4, 3.4);
+scene.add(css);
+
+const figmaTexture = new THREE.TextureLoader().load('figma.png');
+const figma = new THREE.Mesh(
+  new THREE.SphereGeometry(0.4, 8, 8), // Use SphereGeometry instead of BoxGeometry
+  new THREE.MeshBasicMaterial({ map: figmaTexture })
+);
+figma.position.set(-3, 3, 5);
+figma.scale.set(3.4, 3.4, 3.4);
+scene.add(figma);
 
 
 jeff.position.z = -5;
@@ -112,7 +129,12 @@ function moveCamera() {
   jef.rotation.y += 0.1;
   jef.rotation.z += 0.1;
 
-  
+  css.rotation.y += 0.1;
+  css.rotation.z += 0.1;
+
+  figma.rotation.y += 0.1;
+  figma.rotation.z += 0.1;
+
   if (model) {
     model.rotation.y += 0.1;
     model.rotation.z += 0.1;
