@@ -61,7 +61,7 @@ loader.load(
   'scene.gltf',
   (gltf) => {
     model = gltf.scene;
-    model.position.set(-10, 0, 30);
+    model.position.set(-10, 0, 21);
     model.scale.set(3, 3, 3);
     scene.add(model);
   },
@@ -70,50 +70,88 @@ loader.load(
     console.error('An error occurred while loading the model', error);
   }
 );
-
-
-// Create a moon
-const jefTexture = new THREE.TextureLoader().load('reactjs.png');
-const jef = new THREE.Mesh(
-  new THREE.SphereGeometry(0.4, 8, 8), // Use SphereGeometry instead of BoxGeometry
-  new THREE.MeshBasicMaterial({ map: jefTexture })
-);
-jef.position.set(-5, 0, 15);
-jef.scale.set(3.4, 3.4, 3.4);
-scene.add(jef);
-
-const cssTexture = new THREE.TextureLoader().load('css.png');
-const css = new THREE.Mesh(
-  new THREE.SphereGeometry(0.4, 8, 8), // Use SphereGeometry instead of BoxGeometry
-  new THREE.MeshBasicMaterial({ map: cssTexture })
-);
-css.position.set(-4, 1, 10);
-css.scale.set(3.4, 3.4, 3.4);
-scene.add(css);
-
-const figmaTexture = new THREE.TextureLoader().load('figma.png');
-const figma = new THREE.Mesh(
-  new THREE.SphereGeometry(0.4, 8, 8), // Use SphereGeometry instead of BoxGeometry
-  new THREE.MeshBasicMaterial({ map: figmaTexture })
-);
-figma.position.set(-3, 3, 5);
-figma.scale.set(3.4, 3.4, 3.4);
-scene.add(figma);
-
-
 jeff.position.z = -5;
 jeff.position.x = 2;
 
-// Add the text container to the body
-// const textContainer = document.createElement('div');
-// textContainer.id = 'text-container';
-// document.body.appendChild(textContainer);
 
-// // Create the animated text element
-// const animatedText = document.createElement('h1');
-// animatedText.id = 'animated-text';
-// animatedText.textContent = 'Hello, World!';
-// textContainer.appendChild(animatedText);
+
+const moon3 = new THREE.Mesh(
+  new THREE.SphereGeometry(1, 10, 5),
+  new THREE.MeshBasicMaterial({
+    color: 0xffff00,
+    trasparent: true,
+    wireframe: true
+    // map: moonTexture,
+    // normalMap: normalTexture,
+  })
+);
+scene.add(moon3);
+moon3.position.z = 9;
+moon3.position.setX(-10);
+
+var geometr = new THREE.BoxBufferGeometry(1, 1, 1);
+
+// Extract the vertices from the geometry
+var vertices = geometr.attributes.position.array;
+
+// Create a new buffer geometry for the cube edges
+var edgeGeometry = new THREE.BufferGeometry();
+var vertices = [
+  new THREE.Vector3(-1, -1, -1),
+  new THREE.Vector3(-1, -1, 1),
+  new THREE.Vector3(-1, 1, -1),
+  new THREE.Vector3(-1, 1, 1),
+  new THREE.Vector3(1, -1, -1),
+  new THREE.Vector3(1, -1, 1),
+  new THREE.Vector3(1, 1, -1),
+  new THREE.Vector3(1, 1, 1)
+];
+
+// Define the 12 edges of the cube, each edge is a pair of vertices
+var edges = [
+  [vertices[0], vertices[1]],
+  [vertices[0], vertices[2]],
+  [vertices[0], vertices[4]],
+  [vertices[3], vertices[1]],
+  [vertices[3], vertices[2]],
+  [vertices[3], vertices[7]],
+  [vertices[5], vertices[1]],
+  [vertices[5], vertices[4]],
+  [vertices[5], vertices[7]],
+  [vertices[6], vertices[2]],
+  [vertices[6], vertices[4]],
+  [vertices[6], vertices[7]]
+];
+
+// Create material
+var materia = new THREE.MeshBasicMaterial({color: 0x00ff00});
+
+// Loop over each edge and create a thin box for the edge
+edges.forEach(edge => {
+  var start = edge[0], end = edge[1];
+
+  // Compute the center of the box
+  var center = new THREE.Vector3().addVectors(start, end).multiplyScalar(0.5);
+
+  // Compute the length of the box
+  var length = new THREE.Vector3().subVectors(start, end).length();
+
+  // Create geometry
+  var geometry = new THREE.BoxGeometry(0.05, 0.05, length);
+
+  // Create mesh
+  var mesh = new THREE.Mesh(geometry, materia);
+
+  // Position the mesh at the center of the box
+  mesh.position.copy(center);
+
+  // Orient the mesh along the box
+  mesh.lookAt(start);
+
+  // Add the mesh to the scene
+  scene.add(mesh);
+});
+
 
 // Move the camera based on scroll
 function moveCamera() {
@@ -125,21 +163,26 @@ function moveCamera() {
 
   jeff.rotation.y += 0.01;
   jeff.rotation.z += 0.01;
+  // console.log("camera.position.x");
 
-  jef.rotation.y += 0.1;
-  jef.rotation.z += 0.1;
+  // console.log(camera.position.x);
+  // console.log("camera.position.y");
+  // console.log(camera.position.y);
+  // console.log("camera.position.z");
+  // console.log(camera.position.z);
 
-  css.rotation.y += 0.1;
-  css.rotation.z += 0.1;
-
-  figma.rotation.y += 0.1;
-  figma.rotation.z += 0.1;
+  moon3.rotation.x += 0.05;
+  moon3.rotation.y += 0.075;
+  moon3.rotation.z += 0.05;
 
   if (model) {
     model.rotation.y += 0.1;
     model.rotation.z += 0.1;
   }
 }
+
+// moon.rotation.y += 0.01;
+// moon.rotation.z += 0.01;
 
 document.body.onscroll = moveCamera;
 moveCamera();
