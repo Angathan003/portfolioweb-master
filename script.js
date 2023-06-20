@@ -143,7 +143,9 @@ edges.forEach(edge => {
   var mesh = new THREE.Mesh(geometry, materia);
 
   // Position the mesh at the center of the box
-  mesh.position.copy(center);
+  mesh.position.z = 2;
+  mesh.position.setX(-10);
+
 
   // Orient the mesh along the box
   mesh.lookAt(start);
@@ -163,13 +165,13 @@ function moveCamera() {
 
   jeff.rotation.y += 0.01;
   jeff.rotation.z += 0.01;
-  // console.log("camera.position.x");
+  console.log("camera.position.x");
 
-  // console.log(camera.position.x);
-  // console.log("camera.position.y");
-  // console.log(camera.position.y);
-  // console.log("camera.position.z");
-  // console.log(camera.position.z);
+  console.log(camera.position.x);
+  console.log("camera.position.y");
+  console.log(camera.position.y);
+  console.log("camera.position.z");
+  console.log(camera.position.z);
 
   moon3.rotation.x += 0.05;
   moon3.rotation.y += 0.075;
